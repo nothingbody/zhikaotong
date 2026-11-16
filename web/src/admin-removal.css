@@ -1,0 +1,17 @@
+.removal-view-switch { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; margin: 0 0 20px; }
+.removal-view-switch > span { color: var(--secondary); font-size: 14px; line-height: 1.6; flex: 1 1 260px; }
+.removal-explanation { margin-bottom: 20px; padding: 14px 16px; border-radius: 14px; background: #f2f2f7; color: #4b4b50; line-height: 1.7; overflow-wrap: anywhere; }
+.removal-explanation.deleting { background: #fff3f0; color: #873d31; }
+.removal-explanation p { margin: 0; }
+.removal-explanation p + p { margin-top: 8px; }
+.admin-removal-form .field small { overflow-wrap: anywhere; }
+.admin-removal-form .form-actions { flex-wrap: nowrap; }
+.class-card-footer { flex-wrap: wrap; }
+.class-restore-note { width: 100%; color: var(--secondary); font-size: 14px; line-height: 1.5; }
+.deleted-account-note { color: var(--secondary); font-size: 14px; }
+@media (max-width: 760px) {
+  .removal-view-switch .tabs { width: 100%; }
+  .removal-view-switch .tabs button { flex: 1; }
+  .admin-removal-form .form-actions .btn { min-width: 0; }
+  .admin-removal-form .form-actions .btn:last-child { flex: 1; }
+}

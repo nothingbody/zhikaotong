@@ -1,0 +1,52 @@
+name: zhikaotong
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.api
+    restart: unless-stopped
+    env_file: .env.server
+    environment:
+      DB_PATH: /data/zhikaotong.db
+      FORWARDED_ALLOW_IPS: 127.0.0.1,172.30.85.1,172.30.85.3
+    networks:
+      default:
+        ipv4_address: 172.30.85.2
+    ports:
+      - "127.0.0.1:18100:8100"
+    volumes:
+      - zhikaotong_data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,noexec,nosuid
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 384m
+    pids_limit: 128
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "3"}
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18101:8080"
+    depends_on: [api]
+    networks:
+      default:
+        ipv4_address: 172.30.85.3
+    mem_limit: 64m
+    pids_limit: 64
+    logging:
+      driver: json-file
+      options: {max-size: "5m", max-file: "2"}
+volumes:
+  zhikaotong_data:
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.30.85.0/24
+          gateway: 172.30.85.1
